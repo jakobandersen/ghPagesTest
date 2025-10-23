@@ -1,9 +1,14 @@
 name: Docs
+
 permissions:
   contents: write
-concurrency: ci-${{ github.repository }}
-cancel-in-progress: true
+
+concurrency:
+  group: ci-${{ github.repository }}
+  cancel-in-progress: true
+
 if: github.repository_owner == 'jakobandersen'
+
 jobs:
   develop-docs:
     if: github.ref == 'refs/heads/develop'
