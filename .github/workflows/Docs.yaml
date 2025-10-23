@@ -1,10 +1,12 @@
 name: Docs
-on: [push]
 permissions:
   contents: write
+concurrency: ci-${{ github.repository }}
+cancel-in-progress: true
+if: github.repository_owner == 'jakobandersen'
 jobs:
-  docs:
-    concurrency: ci-${{ github.ref }} # Recommended if you intend to make multiple deployments in quick succession.
+  develop-docs:
+    if: github.ref == 'refs/heads/develop'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -17,3 +19,17 @@ jobs:
         with:
           folder: docs
           clean-exclude: docs
+  release-docs:
+    if: startsWith(github.event.ref, 'refs/tags/v')'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build
+        run: |
+          echo "Building docs"
+      - name: Deploy
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: docs
+          target-folder: docs/${{github.ref_name}}
