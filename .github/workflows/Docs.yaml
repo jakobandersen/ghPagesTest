@@ -24,7 +24,7 @@ jobs:
           folder: docs
           clean-exclude: docs
   release-docs:
-    if: github.repository_owner == 'jakobandersen' && startsWith(github.event.ref, 'refs/tags/v')'
+    if: github.repository_owner == 'jakobandersen' && startsWith(github.event.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
