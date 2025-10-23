@@ -29,6 +29,7 @@ jobs:
         with:
           folder: docs
           clean-exclude: docs
+          commit-message: Update develop docs from ${{ github.sha }}
   release-docs:
     if: github.repository_owner == 'jakobandersen' && startsWith(github.event.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
@@ -43,3 +44,4 @@ jobs:
         with:
           folder: docs
           target-folder: docs/${{github.ref_name}}
+          commit-message: Create release docs for ${{github.ref_name}}
